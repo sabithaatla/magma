@@ -509,7 +509,7 @@ message EmmContext {
   
   message SNssai {
     uint32 sst = 1;
-    bytes  sd  = 2;
+    uint32 sd  = 2;
   }
   
   message QosFlowParameters {
@@ -532,9 +532,9 @@ message EmmContext {
     bool   is_emergency = 4;
     Ambr   selected_ambr = 5;
     uint32 gnb_gtp_teid = 6; 
-    bytes  gnb_gtp_teid_ip_addr= 7;
+    string  gnb_gtp_teid_ip_addr= 7;
     uint32 upf_gtp_teid = 8; 
-    bytes  upf_gtp_teid_ip_addr= 9;
+    string  upf_gtp_teid_ip_addr= 9;
     bytes  paa = 10;
     Ambr   apn_ambr = 11;
     Smf_Proc_Data smf_proc_data = 12;
@@ -542,5 +542,5 @@ message EmmContext {
     ProtocolConfigurationOptions pco = 14;
     string dnn_in_use = 15;   
     SNssai requested_nssai = 16;
-    repeated M5GQosFlowItem qos_flow_list = 17;
+    M5GQosFlowItem qos_flow_list = 17;
    }
