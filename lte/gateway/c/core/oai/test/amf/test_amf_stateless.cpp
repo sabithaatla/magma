@@ -270,6 +270,11 @@ TEST(test_amf_context_to_proto, test_amf_context_state_to_proto) {
 
   amf_ctx1.ksi = 0x06;
 
+  uint8_t pdu_sess_id = 1;
+  smf_context_t smf_ctx              = {};
+  smf_ctx.pdu_session_state          = ACTIVE;
+  amf_ctx1.smf_ctxt_map[pdu_sess_id] = std::make_shared<smf_context_t>(smf_ctx);
+
   AmfNasStateConverter::amf_context_to_proto(&amf_ctx1, &emm_context_proto);
   AmfNasStateConverter::proto_to_amf_context(emm_context_proto, &amf_ctx2);
 
@@ -298,6 +303,12 @@ TEST(test_amf_context_to_proto, test_amf_context_state_to_proto) {
           &amf_ctx1.originating_tai, &amf_ctx2.originating_tai,
           sizeof(amf_ctx1.originating_tai)),
       0);
+  EXPECT_EQ(amf_ctx1.smf_ctxt_map.size(), amf_ctx2.smf_ctxt_map.size());
+  auto map1 = amf_ctx1.smf_ctxt_map.find(pdu_sess_id);
+  auto map2 = amf_ctx2.smf_ctxt_map.find(pdu_sess_id);
+  EXPECT_EQ(
+      map1->second.get()->pdu_session_state,
+      map2->second.get()->pdu_session_state);
 }
 TEST(test_amf_security_context_to_proto, test_amf_security_context_to_proto) {
   amf_security_context_t state_amf_security_context_1 = {};
