@@ -88,6 +88,7 @@ class AMFClientServicer : public AMFClientServicerBase {
   void operator=(AMFClientServicer const&) = delete;
 
   map_string_string_t map_tableKey_protoStr;
+  map_string_string_t map_imsi_ue_protoStr;
 
 #if MME_UNIT_TEST
   status_code_e amf_send_msg_to_task(
