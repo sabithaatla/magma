@@ -107,11 +107,13 @@ int AmfNasStateManager::initialize_state(const amf_config_t* amf_config_p) {
 
   // Allocate the local AMF state and create respective single object
   create_state();
-#if MME_UNIT_TEST
+#if !MME_UNIT_TEST
+  redis_client =
+      std::make_unique<magma::lte::RedisClient>(persist_state_enabled);
+#endif
   read_state_from_db();
   read_ue_state_from_db();
   amf_sync_app_maps_from_db();
-#endif
   is_initialized = true;
   return rc;
 }
